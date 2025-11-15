@@ -1,0 +1,120 @@
+========================================
+  MULTI-MALL POS SYSTEM - QUICK START
+========================================
+
+STEP 1: INSTALL DEPENDENCIES
+-----------------------------
+Open Command Prompt in this folder and run:
+    pip install -r requirements.txt
+
+STEP 2: START THE APPLICATION
+------------------------------
+Run:
+    python app.py
+
+The app will start at: http://localhost:5000
+
+STEP 3: REGISTER YOUR MALL
+---------------------------
+1. Open browser: http://localhost:5000
+2. Click "Register New Mall"
+3. Fill in:
+   - Mall Name: Your Store Name
+   - Mall ID: unique_id (e.g., mall001)
+   - Password: your_password
+   - Location: City/Address
+   - Contact: Phone number
+4. Click Register
+
+STEP 4: LOGIN AS ADMIN
+-----------------------
+1. Click "Mall Admin Login"
+2. Enter Mall ID and Password
+3. You'll see the Dashboard
+
+STEP 5: ADD PRODUCTS
+--------------------
+1. Go to "Products" menu
+2. Add products with:
+   - Barcode: 123456789 (or scan)
+   - Name: Product Name
+   - Price: 99.99
+   - Stock: 100
+   - Category: Electronics
+3. Click "Add Product"
+
+STEP 6: CREATE CASHIER ACCOUNTS
+--------------------------------
+1. Go to "Users" menu
+2. Add user:
+   - Username: cashier1
+   - Password: pass123
+   - Role: Cashier
+3. Click "Add User"
+
+STEP 7: START BILLING
+----------------------
+1. Logout from admin
+2. Click "Cashier Login"
+3. Login with cashier credentials
+4. Scan or enter barcode
+5. Press Enter to add to cart
+6. Select payment method
+7. Click "Complete Billing"
+
+BARCODE SCANNING
+----------------
+- Use USB barcode scanner (plug and play)
+- Or type barcode manually and press Enter
+- Product automatically added to cart
+
+SAMPLE BARCODES FOR TESTING
+----------------------------
+Add these products first:
+- Barcode: 123456 | Name: Coca Cola | Price: 40
+- Barcode: 789012 | Name: Lays Chips | Price: 20
+- Barcode: 345678 | Name: Dairy Milk | Price: 50
+
+Then scan/enter these barcodes in billing!
+
+ACCESSING FROM OTHER DEVICES
+-----------------------------
+Find your computer's IP address:
+    ipconfig (Windows)
+
+Then access from other devices:
+    http://YOUR_IP:5000
+    Example: http://192.168.1.100:5000
+
+MULTIPLE MALLS
+--------------
+Each mall registers separately with unique Mall ID.
+All data is isolated per mall.
+
+REPORTS
+-------
+Admin can view:
+- Total sales
+- Daily sales
+- Top products
+- Active users
+- Transaction history
+
+TROUBLESHOOTING
+---------------
+Q: Port 5000 in use?
+A: Change port in app.py line: app.run(port=5001)
+
+Q: Module not found?
+A: Run: pip install flask werkzeug
+
+Q: Database error?
+A: Delete pos_system.db and restart
+
+SUPPORT
+-------
+Check README.md for detailed documentation.
+
+========================================
+        HAPPY BILLING! 🛒💰
+========================================
