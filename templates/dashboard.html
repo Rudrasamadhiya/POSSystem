@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - {{ session.mall_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">{{ session.mall_name }}</div>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('products') }}">Products</a>
+            <a href="{{ url_for('users') }}">Users</a>
+            <a href="{{ url_for('reports') }}">Reports</a>
+            <a href="{{ url_for('billing') }}">Billing</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Dashboard</h1>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>💰 Total Sales</h3>
+                <p class="stat-value">₹{{ "%.2f"|format(total_sales) }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>📦 Total Products</h3>
+                <p class="stat-value">{{ total_products }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>👥 Active Users</h3>
+                <p class="stat-value">{{ active_users }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>📊 Today's Sales</h3>
+                <p class="stat-value">₹{{ "%.2f"|format(today_sales) }}</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Recent Transactions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trans in recent_transactions %}
+                    <tr>
+                        <td>#{{ trans.id }}</td>
+                        <td>₹{{ "%.2f"|format(trans.total_amount) }}</td>
+                        <td>{{ trans.payment_method }}</td>
+                        <td>{{ trans.customer_name or 'N/A' }}</td>
+                        <td>{{ trans.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing - {{ session.mall_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">{{ session.mall_name }}</div>
+        <div class="nav-links">
+            {% if session.role == 'admin' %}
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('products') }}">Products</a>
+            {% endif %}
+            <a href="{{ url_for('billing') }}">Billing</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Billing System</h1>
+        
+        <div class="billing-grid">
+            <div class="card">
+                <h2>Scan Product</h2>
+                
+                <div class="scanner-tabs">
+                    <button class="tab-btn active" onclick="switchTab('manual')">Manual Entry</button>
+                    <button class="tab-btn" onclick="switchTab('camera')">Camera Scanner</button>
+                </div>
+                
+                <div id="manualTab" class="tab-content active">
+                    <div class="form-group">
+                        <label>Barcode</label>
+                        <input type="text" id="barcodeInput" placeholder="Scan or enter barcode" autofocus>
+                    </div>
+                    <button onclick="scanProduct()" class="btn btn-primary">Add to Cart</button>
+                </div>
+                
+                <div id="cameraTab" class="tab-content">
+                    <div id="cameraContainer">
+                        <video id="video" autoplay></video>
+                        <canvas id="canvas" style="display:none;"></canvas>
+                    </div>
+                    <button onclick="startCamera()" id="startCameraBtn" class="btn btn-primary">Start Camera</button>
+                    <button onclick="stopCamera()" id="stopCameraBtn" class="btn btn-outline" style="display:none;">Stop Camera</button>
+                    <div id="scanStatus"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Shopping Cart</h2>
+                <div id="cartItems"></div>
+                <div class="cart-total">
+                    <h3>Total: ₹<span id="totalAmount">0.00</span></h3>
+                </div>
+                
+                <div class="form-group">
+                    <label>Customer Name (Optional)</label>
+                    <input type="text" id="customerName">
+                </div>
+                
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select id="paymentMethod">
+                        <option value="cash">Cash</option>
+                        <option value="card">Card</option>
+                        <option value="upi">UPI</option>
+                    </select>
+                </div>
+                
+                <button onclick="completeBilling()" class="btn btn-success">Complete Billing</button>
+                <button onclick="clearCart()" class="btn btn-outline">Clear Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest"></script>
+    <script src="{{ url_for('static', filename='js/billing.js') }}"></script>
+</body>
+</html>

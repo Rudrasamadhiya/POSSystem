@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Mall POS System - Professional Billing Solution</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+    <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+</head>
+<body>
+    <div class="landing-page">
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="logo-badge">🏬 POS PRO</div>
+                <h1 class="hero-title">Multi-Mall Point of Sale System</h1>
+                <p class="hero-subtitle">Enterprise-grade billing solution with real-time inventory management, barcode scanning, and comprehensive analytics</p>
+                <div class="hero-buttons">
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">🔐 Admin Login</a>
+                    <a href="{{ url_for('user_login') }}" class="btn btn-secondary">👤 Cashier Login</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-outline">✨ Register Mall</a>
+                </div>
+                <div class="trust-badges">
+                    <span>✓ Secure</span>
+                    <span>✓ Fast</span>
+                    <span>✓ Reliable</span>
+                    <span>✓ Multi-tenant</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h2 class="section-title">Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon">📷</div>
+                    <h3>Webcam Barcode Scanner</h3>
+                    <p>Scan products instantly using your device camera or USB scanner</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Track sales, revenue, and inventory with live dashboards</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Multi-Mall Support</h3>
+                    <p>Manage multiple stores with separate accounts and data</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">👥</div>
+                    <h3>User Management</h3>
+                    <p>Create cashier accounts with role-based access control</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">📦</div>
+                    <h3>Inventory Control</h3>
+                    <p>Automatic stock updates and low-stock alerts</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">💳</div>
+                    <h3>Multiple Payments</h3>
+                    <p>Accept cash, card, and UPI payments seamlessly</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile Responsive</h3>
+                    <p>Works perfectly on desktop, tablet, and mobile devices</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Private</h3>
+                    <p>Encrypted passwords and isolated mall data</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat-item">
+                <div class="stat-number">⚡</div>
+                <div class="stat-label">Lightning Fast</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">🎯</div>
+                <div class="stat-label">99.9% Accurate</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">🚀</div>
+                <div class="stat-label">Easy Setup</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">💎</div>
+                <div class="stat-label">Professional</div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <div class="cta-glow"></div>
+            <div class="cta-content">
+                <div class="cta-badge">🚀 LIMITED TIME OFFER</div>
+                <h2 class="cta-title">Ready to Transform Your Business?</h2>
+                <p class="cta-subtitle">Join hundreds of stores using our POS system</p>
+                <div class="cta-features">
+                    <span>✓ Free Setup</span>
+                    <span>✓ 24/7 Support</span>
+                    <span>✓ No Credit Card</span>
+                </div>
+                <a href="{{ url_for('register') }}" class="btn-mega">
+                    <span class="btn-mega-text">Get Started Now</span>
+                    <span class="btn-mega-icon">→</span>
+                </a>
+                <p class="cta-note">Start billing in less than 5 minutes</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2025 Multi-Mall POS System. All rights reserved.</p>
+            <p>Professional billing solution for modern businesses</p>
+        </footer>
+    </div>
+</body>
+</html>

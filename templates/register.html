@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Mall</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h2>Register Your Mall</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="POST">
+                <div class="form-group">
+                    <label>Mall Name</label>
+                    <input type="text" name="mall_name" required>
+                </div>
+                <div class="form-group">
+                    <label>Mall ID (Unique)</label>
+                    <input type="text" name="mall_id" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location">
+                </div>
+                <div class="form-group">
+                    <label>Contact</label>
+                    <input type="text" name="contact">
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <a href="{{ url_for('index') }}" class="btn btn-outline">Back</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
