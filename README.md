@@ -1,4 +1,5 @@
 # Multi-Mall POS System 🏬
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white)](https://github.com/Rudrasamadhiya/POSSystem) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 A complete Point of Sale (POS) billing system for malls and stores with multi-tenant support.
 
