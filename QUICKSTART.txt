@@ -118,3 +118,10 @@ Check README.md for detailed documentation.
 ========================================
         HAPPY BILLING! 🛒💰
 ========================================
+
+
+STEP 5: TROUBLESHOOTING
+------------------------------
+- If port 5000 is busy, run: python app.py --port 5001
+- Database reset: delete pos_system.db and restart
+- For demo data: check /static/seed_data.sql
