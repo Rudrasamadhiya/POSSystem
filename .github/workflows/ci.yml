@@ -9,6 +9,22 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: pos
+          POSTGRES_PASSWORD: pos
+          POSTGRES_DB: posdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,7 +35,7 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Compile, package and run tests
+      - name: Compile, package and run tests (CSV backend)
         run: |
           chmod +x build.sh
           ./build.sh
@@ -27,15 +43,28 @@ jobs:
       - name: Run end-to-end demo
         run: java -jar out/pos-system.jar --demo
 
-      - name: Smoke-test web server
+      - name: Smoke-test web server (CSV backend)
         run: |
           java -jar out/pos-system.jar --web &
-          SERVER_PID=$!
+          PID=$!
           sleep 5
+          curl -fsS http://localhost:8080/api/summary | head -c 300; echo
+          kill $PID
+
+      - name: Smoke-test web server (PostgreSQL backend)
+        env:
+          DATABASE_URL: postgres://pos:pos@localhost:5432/posdb
+        run: |
+          curl -fsSL -o postgresql.jar \
+            https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar
+          java -cp "out/pos-system.jar:postgresql.jar" com.rudra.pos.Main --web &
+          PID=$!
+          sleep 6
           echo "GET /api/summary:"
           curl -fsS http://localhost:8080/api/summary | head -c 400; echo
           echo "POST /api/sell:"
           curl -fsS -X POST http://localhost:8080/api/sell \
             -d 'barcode=8901006&qty=2&payment=CASH' | head -c 400; echo
-          curl -fsS http://localhost:8080/ | head -c 80; echo
-          kill $SERVER_PID
+          echo "GET /api/products:"
+          curl -fsS http://localhost:8080/api/products | head -c 120; echo
+          kill $PID

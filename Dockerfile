@@ -6,12 +6,16 @@ COPY . .
 RUN chmod +x build.sh && ./build.sh
 
 # ---------- run stage ----------
-# Slim JRE image that just runs the packaged jar in web mode.
+# Slim JRE image. The PostgreSQL JDBC driver is the project's ONLY runtime
+# dependency, added here (not at compile time) so the codebase stays
+# dependency-free. Docker's ADD fetches it during the image build.
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /app/out/pos-system.jar ./pos-system.jar
+ADD https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar ./postgresql.jar
 
-# Render (and most PaaS) inject $PORT; the app reads it, defaulting to 8080.
+# Render injects $PORT and $DATABASE_URL. With DATABASE_URL set the app uses
+# PostgreSQL; without it, it falls back to local CSV files.
 ENV PORT=8080
 EXPOSE 8080
-CMD ["java", "-jar", "pos-system.jar", "--web"]
+CMD ["sh", "-c", "java -cp pos-system.jar:postgresql.jar com.rudra.pos.Main --web"]

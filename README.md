@@ -11,8 +11,10 @@ written in **pure, object-oriented Java with zero third-party dependencies**.
 
 It demonstrates clean layered architecture, classic design patterns, a
 **transactional billing engine** that never oversells stock, salted password
-hashing, and durable file-based persistence with **atomic, crash-safe writes** —
-all built on nothing but the JDK standard library, compiled and tested in CI.
+hashing, and **pluggable persistence** — local CSV files by default, or
+**PostgreSQL** in production behind the same interfaces. The codebase compiles
+against nothing but the JDK (the PostgreSQL JDBC driver is the only runtime
+add-on), and both storage backends are exercised in CI.
 
 > Re-engineered from an earlier prototype into a proper OOP backend with a test
 > suite and continuous integration.
@@ -69,10 +71,12 @@ all built on nothing but the JDK standard library, compiled and tested in CI.
 - Ring up a sale from the browser and watch stock + analytics update live.
 - Containerised and deployable to a real `https://` URL (see [Deploy](#-deploy-a-live-link)).
 
-**Persistence**
-- Human-readable CSV tables, RFC-4180-correct quoting/escaping.
-- **Atomic writes** (temp file + atomic move) → a reader never sees a half-written file, even on a crash.
-- State survives restarts; verified by a dedicated reload test.
+**Pluggable persistence** (CSV ⇄ PostgreSQL)
+- Repositories sit behind interfaces, so storage swaps with **zero changes** to business logic.
+- **CSV backend** (default): human-readable tables, RFC-4180 quoting, **atomic crash-safe writes** (temp file + atomic move) — no setup, nothing to install.
+- **PostgreSQL backend** (production): real JDBC repositories with a connection-per-op model and **transactional commit/rollback** for sales. Activated automatically when a `DATABASE_URL` is present.
+- The JDBC code uses only `java.sql` (JDK), so the project still **compiles with zero dependencies** — the Postgres driver is the single *runtime-only* dependency, added in Docker.
+- Both backends are verified end-to-end in CI.
 
 ---
 
@@ -202,15 +206,15 @@ repo already includes a `Dockerfile` and a `render.yaml` blueprint.
 **Render (recommended, free):**
 1. Push this repo to GitHub.
 2. Go to [render.com](https://render.com) → **New ▸ Blueprint** → select this repo.
-   Render reads `render.yaml`, builds the `Dockerfile`, and deploys.
-   *(Or **New ▸ Web Service** → pick the repo → Render auto-detects the Dockerfile.)*
+   Render reads `render.yaml`: it provisions a **free PostgreSQL database**, builds the
+   `Dockerfile`, wires `DATABASE_URL` into the web service, and deploys.
 3. When it finishes you get a URL like `https://pos-system-xxxx.onrender.com`.
-   Open it → the dashboard loads with the seeded demo store.
+   Open it → the dashboard loads with the seeded demo store, now backed by Postgres.
 4. Paste that URL into the **Live demo** line near the top of this README.
 
-> Free instances sleep after inactivity, so the first request after idle can take
-> ~30s to wake. Data is seeded fresh on each cold start (the free tier has no
-> persistent disk) — perfect for a demo.
+> The app uses PostgreSQL when `DATABASE_URL` is set (so **data persists** across
+> restarts) and falls back to local CSV files otherwise. Free Render instances
+> sleep after inactivity, so the first request after idle can take ~30s to wake.
 
 **Run it in a browser instead (no deploy):** use the **Open in Cloud Shell** /
 **Gitpod** buttons at the top, then run `java -jar out/pos-system.jar --web`.

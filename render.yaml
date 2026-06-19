@@ -1,5 +1,9 @@
-# Render Blueprint — deploys the POS web dashboard as a free web service.
+# Render Blueprint — deploys the POS web dashboard + a free PostgreSQL database.
 # Push this repo to GitHub, then in Render: New ▸ Blueprint ▸ pick this repo.
+databases:
+  - name: pos-db
+    plan: free
+
 services:
   - type: web
     name: pos-system
@@ -8,3 +12,10 @@ services:
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/summary
     autoDeploy: true
+    envVars:
+      # Render injects the database connection string here; the app detects it
+      # and switches from CSV files to PostgreSQL automatically.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pos-db
+          property: connectionString
