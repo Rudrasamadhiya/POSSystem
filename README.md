@@ -23,7 +23,7 @@ add-on), and both storage backends are exercised in CI.
 
 ## ▶️ Try it
 
-- **🌐 Live demo:** _paste your Render URL here after deploying_ → `https://pos-system-xxxx.onrender.com`
+- **🌐 Live demo:** **[possystem-pvup.onrender.com](https://possystem-pvup.onrender.com/)** _(free tier — first load after idle takes ~30s to wake)_
 - **🧑‍💻 Run it in your browser — no install:**
 
   [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/Rudrasamadhiya/POSSystem)
