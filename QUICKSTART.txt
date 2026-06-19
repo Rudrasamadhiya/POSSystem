@@ -1,127 +1,59 @@
 ========================================
-  MULTI-MALL POS SYSTEM - QUICK START
+  MULTI-STORE POS SYSTEM - QUICK START
+  (Java, zero dependencies)
 ========================================
 
-STEP 1: INSTALL DEPENDENCIES
+REQUIREMENTS
+------------
+Just a JDK 11 or newer on your PATH. No Maven, no internet, no dependencies.
+Check with:  java -version   and   javac -version
+
+STEP 1: BUILD + RUN THE TESTS
 -----------------------------
-Open Command Prompt in this folder and run:
-    pip install -r requirements.txt
+From this folder:
 
-STEP 2: START THE APPLICATION
-------------------------------
-Run:
-    python app.py
+    Windows :   build.bat
+    Mac/Linux:  ./build.sh
 
-The app will start at: http://localhost:5000
+This compiles the code, builds a runnable jar (out/pos-system.jar), then
+compiles and runs the test suite. You should see "RESULT: N passed, 0 failed".
 
-STEP 3: REGISTER YOUR MALL
----------------------------
-1. Open browser: http://localhost:5000
-2. Click "Register New Mall"
-3. Fill in:
-   - Mall Name: Your Store Name
-   - Mall ID: unique_id (e.g., mall001)
-   - Password: your_password
-   - Location: City/Address
-   - Contact: Phone number
-4. Click Register
+(Alternative, if you prefer Maven:  mvn package )
 
-STEP 4: LOGIN AS ADMIN
------------------------
-1. Click "Mall Admin Login"
-2. Enter Mall ID and Password
-3. You'll see the Dashboard
+STEP 2: RUN THE APP
+-------------------
+    java -jar out/pos-system.jar
 
-STEP 5: ADD PRODUCTS
---------------------
-1. Go to "Products" menu
-2. Add products with:
-   - Barcode: 123456789 (or scan)
-   - Name: Product Name
-   - Price: 99.99
-   - Stock: 100
-   - Category: Electronics
-3. Click "Add Product"
+On first launch it seeds a demo store so everything is already populated.
 
-STEP 6: CREATE CASHIER ACCOUNTS
---------------------------------
-1. Go to "Users" menu
-2. Add user:
-   - Username: cashier1
-   - Password: pass123
-   - Role: Cashier
-3. Click "Add User"
+    Store admin login -> code: BHOPAL01   password: admin123
+    Cashier login     -> user: ravi       password: cashier123
+    Manager           -> user: neha       password: manager123
 
-STEP 7: START BILLING
-----------------------
-1. Logout from admin
-2. Click "Cashier Login"
-3. Login with cashier credentials
-4. Scan or enter barcode
-5. Press Enter to add to cart
-6. Select payment method
-7. Click "Complete Billing"
+STEP 3: TRY THE SCRIPTED DEMO (no typing needed)
+------------------------------------------------
+    java -jar out/pos-system.jar --demo
 
-BARCODE SCANNING
-----------------
-- Use USB barcode scanner (plug and play)
-- Or type barcode manually and press Enter
-- Product automatically added to cart
+This runs a full seed -> sell -> report walk-through and prints a receipt and
+analytics. (This is exactly what GitHub Actions CI runs on every push.)
 
-SAMPLE BARCODES FOR TESTING
-----------------------------
-Add these products first:
-- Barcode: 123456 | Name: Coca Cola | Price: 40
-- Barcode: 789012 | Name: Lays Chips | Price: 20
-- Barcode: 345678 | Name: Dairy Milk | Price: 50
+USING THE INTERACTIVE APP
+-------------------------
+- Admin menu: Dashboard, Products & inventory, Staff, New sale, Reports.
+- Billing: type/scan a barcode, enter quantity, then type 'pay' to check out.
+  Demo barcodes: 8901001 (Atta), 8901004 (Milk), 8901006 (Maggi), 8901008 (Coke).
+- Reports: summary, daily sales, top products, payment mix, CSV export.
 
-Then scan/enter these barcodes in billing!
+WHERE IS MY DATA?
+-----------------
+Stored as human-readable CSV files in the ./data folder (created on first run):
+stores.csv, users.csv, products.csv, transactions.csv, transaction_lines.csv.
+Delete the ./data folder to start fresh.
 
-ACCESSING FROM OTHER DEVICES
------------------------------
-Find your computer's IP address:
-    ipconfig (Windows)
-
-Then access from other devices:
-    http://YOUR_IP:5000
-    Example: http://192.168.1.100:5000
-
-MULTIPLE MALLS
---------------
-Each mall registers separately with unique Mall ID.
-All data is isolated per mall.
-
-REPORTS
--------
-Admin can view:
-- Total sales
-- Daily sales
-- Top products
-- Active users
-- Transaction history
-
-TROUBLESHOOTING
----------------
-Q: Port 5000 in use?
-A: Change port in app.py line: app.run(port=5001)
-
-Q: Module not found?
-A: Run: pip install flask werkzeug
-
-Q: Database error?
-A: Delete pos_system.db and restart
-
-SUPPORT
--------
-Check README.md for detailed documentation.
+MORE DETAIL
+-----------
+See README.md for the architecture, design patterns, and full feature list.
 
 ========================================
-        HAPPY BILLING! 🛒💰
+            HAPPY BILLING!
 ========================================
-
-
-STEP 5: TROUBLESHOOTING
-------------------------------
-- If port 5000 is busy, run: python app.py --port 5001
-- Database reset: delete pos_system.db and restart
-- For demo data: check /static/seed_data.sql

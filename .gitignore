@@ -1,0 +1,24 @@
+# Build output
+out/
+target/
+*.class
+
+# Runtime data (CSV tables created when the app runs)
+data/
+
+# Legacy Python prototype artifacts (kept out of the Java build)
+__pycache__/
+*.pyc
+pos_system.db
+
+# IDE / editor
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
