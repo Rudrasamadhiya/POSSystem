@@ -15,6 +15,11 @@ echo ">> Compiling main sources..."
 find "$ROOT/src/main/java" -name '*.java' > "$OUT/sources.txt"
 javac -encoding UTF-8 -d "$OUT/classes" @"$OUT/sources.txt"
 
+if [ -d "$ROOT/src/main/resources" ]; then
+  echo ">> Bundling resources (web UI)..."
+  cp -r "$ROOT/src/main/resources/." "$OUT/classes/"
+fi
+
 echo ">> Packaging runnable jar..."
 jar cfe "$OUT/pos-system.jar" com.rudra.pos.Main -C "$OUT/classes" .
 

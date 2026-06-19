@@ -1,0 +1,10 @@
+# Render Blueprint — deploys the POS web dashboard as a free web service.
+# Push this repo to GitHub, then in Render: New ▸ Blueprint ▸ pick this repo.
+services:
+  - type: web
+    name: pos-system
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/summary
+    autoDeploy: true

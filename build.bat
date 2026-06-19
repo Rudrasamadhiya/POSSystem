@@ -15,6 +15,11 @@ dir /s /b "%ROOT%src\main\java\*.java" > "%OUT%\sources.txt"
 javac -encoding UTF-8 -d "%OUT%\classes" @"%OUT%\sources.txt"
 if errorlevel 1 exit /b 1
 
+if exist "%ROOT%src\main\resources" (
+    echo ^>^> Bundling resources ^(web UI^)...
+    xcopy "%ROOT%src\main\resources\*" "%OUT%\classes\" /s /e /y /i >nul
+)
+
 echo ^>^> Packaging runnable jar...
 jar cfe "%OUT%\pos-system.jar" com.rudra.pos.Main -C "%OUT%\classes" .
 if errorlevel 1 exit /b 1

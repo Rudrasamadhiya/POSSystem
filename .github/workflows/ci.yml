@@ -26,3 +26,16 @@ jobs:
 
       - name: Run end-to-end demo
         run: java -jar out/pos-system.jar --demo
+
+      - name: Smoke-test web server
+        run: |
+          java -jar out/pos-system.jar --web &
+          SERVER_PID=$!
+          sleep 5
+          echo "GET /api/summary:"
+          curl -fsS http://localhost:8080/api/summary | head -c 400; echo
+          echo "POST /api/sell:"
+          curl -fsS -X POST http://localhost:8080/api/sell \
+            -d 'barcode=8901006&qty=2&payment=CASH' | head -c 400; echo
+          curl -fsS http://localhost:8080/ | head -c 80; echo
+          kill $SERVER_PID

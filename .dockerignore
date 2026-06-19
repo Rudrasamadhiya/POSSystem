@@ -1,0 +1,21 @@
+# Keep the Docker build context small and clean.
+.git
+out/
+target/
+data/
+
+# Legacy Python prototype (not part of the Java build)
+app.py
+requirements.txt
+pos_system.db
+templates/
+static/
+__pycache__/
+*.pyc
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

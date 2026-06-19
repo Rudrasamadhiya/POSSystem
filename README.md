@@ -19,6 +19,23 @@ all built on nothing but the JDK standard library, compiled and tested in CI.
 
 ---
 
+## ▶️ Try it
+
+- **🌐 Live demo:** _paste your Render URL here after deploying_ → `https://pos-system-xxxx.onrender.com`
+- **🧑‍💻 Run it in your browser — no install:**
+
+  [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/Rudrasamadhiya/POSSystem)
+  [![Open in Gitpod](https://img.shields.io/badge/Gitpod-Open-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Rudrasamadhiya/POSSystem)
+
+  In the browser terminal: `./build.sh && java -jar out/pos-system.jar`  (CLI)
+  &nbsp; or &nbsp; `java -jar out/pos-system.jar --web`  (web dashboard).
+
+- **🚀 One-click deploy your own live link:**
+
+  [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Rudrasamadhiya/POSSystem)
+
+---
+
 ## ✨ Features
 
 **Multi-tenant core**
@@ -45,6 +62,12 @@ all built on nothing but the JDK standard library, compiled and tested in CI.
 **Reporting & analytics**
 - Total & daily revenue, best-selling products, payment-method mix.
 - One-click **CSV export** of the sales ledger.
+
+**Web dashboard** (optional, same zero-dependency Java)
+- A live dashboard served by the JDK's built-in `HttpServer` — **no Spring, no servlet container, no jars**.
+- JSON API (`/api/summary`, `/api/products`, `/api/top`, `/api/daily`, `/api/payments`, `/api/sell`) over the exact same service layer the CLI uses.
+- Ring up a sale from the browser and watch stock + analytics update live.
+- Containerised and deployable to a real `https://` URL (see [Deploy](#-deploy-a-live-link)).
 
 **Persistence**
 - Human-readable CSV tables, RFC-4180-correct quoting/escaping.
@@ -139,6 +162,9 @@ java -jar out/pos-system.jar
 
 # Scripted, non-interactive walk-through (seed → sell → reports)
 java -jar out/pos-system.jar --demo
+
+# Web dashboard — then open http://localhost:8080
+java -jar out/pos-system.jar --web
 ```
 
 ### Demo credentials
@@ -164,6 +190,44 @@ so the badge at the top reflects a genuinely working build.
 ```bash
 # run just the tests locally
 ./build.sh        # tests run as the final step
+```
+
+---
+
+## 🚀 Deploy a live link
+
+The web mode is containerised, so you can put it on a public URL for free. The
+repo already includes a `Dockerfile` and a `render.yaml` blueprint.
+
+**Render (recommended, free):**
+1. Push this repo to GitHub.
+2. Go to [render.com](https://render.com) → **New ▸ Blueprint** → select this repo.
+   Render reads `render.yaml`, builds the `Dockerfile`, and deploys.
+   *(Or **New ▸ Web Service** → pick the repo → Render auto-detects the Dockerfile.)*
+3. When it finishes you get a URL like `https://pos-system-xxxx.onrender.com`.
+   Open it → the dashboard loads with the seeded demo store.
+4. Paste that URL into the **Live demo** line near the top of this README.
+
+> Free instances sleep after inactivity, so the first request after idle can take
+> ~30s to wake. Data is seeded fresh on each cold start (the free tier has no
+> persistent disk) — perfect for a demo.
+
+**Run it in a browser instead (no deploy):** use the **Open in Cloud Shell** /
+**Gitpod** buttons at the top, then run `java -jar out/pos-system.jar --web`.
+
+## 🎥 Record a demo (optional)
+
+To embed a recording of the CLI in this README:
+
+```bash
+# Option A — terminal recording (asciinema)
+asciinema rec demo.cast -c "java -jar out/pos-system.jar --demo"
+# upload, then paste the player link here
+
+# Option B — animated GIF
+#   run the --demo command and screen-record it with ScreenToGif (Windows)
+#   or Kap (macOS), save as docs/demo.gif, then reference it:
+#   ![demo](docs/demo.gif)
 ```
 
 ---
